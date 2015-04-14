@@ -37,7 +37,11 @@ def make_chains(corpus):
     for i in range(len(source_list)-1):
         for word in source_list:
             markov_dict[(word, source_list[i+1])] = []
-        
+            markov_dict[(word, source_list[i+1])].append(source_list[i+2])
+    
+    #Will have list index out of range error
+    #Want to immediately append third word to value list associated with tuple key
+
     # i = 0
     # while True:
     #     try:

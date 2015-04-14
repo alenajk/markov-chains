@@ -22,10 +22,37 @@ for line in source_text:
     source_line = line.rstrip()
     source_string += source_line + " "
 
+#print source_string
+
+markov_dict = {}
+
 def make_chains(corpus):
     """Takes input text as string; returns dictionary of markov chains."""
-    
 
+    source_list = source_string.split(" ")
+    source_list.pop()
+    
+    i = 0
+
+    for i in range(len(source_list)-1):
+        for word in source_list:
+            markov_dict[(word, source_list[i+1])] = []
+        
+    # i = 0
+    # while True:
+    #     try:
+    #         for word in source_list:
+    #             print markov_dict[(word, source_list[i+1])].append(source_list[i+2])
+    #     except KeyError:
+    #         break
+
+
+    # # for key_tuple in markov_dict:
+    # #     source_list.find # want all instances
+    # #     markov_dict[key_tuple].append(next_word))
+
+
+    print markov_dict
 
     return {}
 
@@ -43,9 +70,10 @@ def make_text(chains):
 # input_text = "Some text"
 
 # # Get a Markov chain
-# chain_dict = make_chains(input_text)
+chain_dict = make_chains(source_string)
 
 # # Produce random text
 # random_text = make_text(chain_dict)
 
 # print random_text
+print chain_dict

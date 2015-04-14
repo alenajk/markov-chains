@@ -22,8 +22,6 @@ for line in source_text:
     source_line = line.rstrip()
     source_string += source_line + " "
 
-#print source_string
-
 markov_dict = {}
 
 def make_chains(corpus):
@@ -31,34 +29,17 @@ def make_chains(corpus):
 
     source_list = source_string.split(" ")
     source_list.pop()
-    
-    i = 0
 
     for i in range(len(source_list)-1):
-        for word in source_list:
-            markov_dict[(word, source_list[i+1])] = []
-            markov_dict[(word, source_list[i+1])].append(source_list[i+2])
-    
-    #Will have list index out of range error
-    #Want to immediately append third word to value list associated with tuple key
+        if (source_list[i], source_list[i+1]) not in markov_dict:
+            markov_dict[(source_list[i], source_list[i+1])] = []    
+            if i <= len(source_list)-3:
+                markov_dict[(source_list[i], source_list[i+1])].append(source_list[i+2])
+        else:
+            if i <= len(source_list)-3:
+                markov_dict[(source_list[i], source_list[i+1])].append(source_list[i+2])
 
-    # i = 0
-    # while True:
-    #     try:
-    #         for word in source_list:
-    #             print markov_dict[(word, source_list[i+1])].append(source_list[i+2])
-    #     except KeyError:
-    #         break
-
-
-    # # for key_tuple in markov_dict:
-    # #     source_list.find # want all instances
-    # #     markov_dict[key_tuple].append(next_word))
-
-
-    print markov_dict
-
-    return {}
+    return markov_dict
 
 
 def make_text(chains):

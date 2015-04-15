@@ -13,10 +13,12 @@
 #print the new text/string/ 
 
 import sys
+import random
 
 text_filename = sys.argv[1]
 source_text = open(text_filename)
 source_string = ""
+
 
 for line in source_text:
     source_line = line.rstrip()
@@ -27,7 +29,7 @@ markov_dict = {}
 def make_chains(corpus):
     """Takes input text as string; returns dictionary of markov chains."""
 
-    source_list = source_string.split(" ")
+    source_list = corpus.split(" ")
     source_list.pop()
 
     for i in range(len(source_list)-1):
@@ -40,25 +42,34 @@ def make_chains(corpus):
                 markov_dict[(source_list[i], source_list[i+1])].append(source_list[i+2])
 
     return markov_dict
-
+    
+starter_string = ""
 
 def make_text(chains):
     """Takes dictionary of markov chains; returns random text."""
+    
+    #Start with a random bi-gram
+    bi_gram = random.choice(chains.keys())
+    
+    #Start output_string with our first bi-gram
+    output_string = starter_string + " ".join(bi_gram)
 
-    return "Here's some random text."
+    #Continue generating random text, concatonating to output_string, and creating new bi-grams as we go
+    while True:
+        if bi_gram in chains and chains[bi_gram] != []:
+            new_word = random.choice(chains[bi_gram])
+            output_string += " " + new_word
+            bi_gram = (bi_gram[1], new_word)
+        else:
+            break
 
+    return output_string
 
-# Change this to read input_text from a file, deciding which file should
-# be used by examining the `sys.argv` arguments (if neccessary, see the
-# Python docs for sys.argv)
-
-# input_text = "Some text"
 
 # # Get a Markov chain
 chain_dict = make_chains(source_string)
 
 # # Produce random text
-# random_text = make_text(chain_dict)
+random_text = make_text(markov_dict)
 
-# print random_text
-print chain_dict
+print random_text

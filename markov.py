@@ -34,11 +34,9 @@ def make_chains(corpus):
 
     for i in range(len(source_list)-1):
         if (source_list[i], source_list[i+1]) not in markov_dict:
-            markov_dict[(source_list[i], source_list[i+1])] = []    
-            if i <= len(source_list)-3:
-                markov_dict[(source_list[i], source_list[i+1])].append(source_list[i+2])
-        else:
-            if i <= len(source_list)-3:
+            markov_dict[(source_list[i], source_list[i+1])] = [] 
+
+        if i <= len(source_list)-3:
                 markov_dict[(source_list[i], source_list[i+1])].append(source_list[i+2])
 
     return markov_dict
@@ -56,7 +54,8 @@ def make_text(chains):
 
     #Continue generating random text, concatonating to output_string, and creating new bi-grams as we go
     while True:
-        if bi_gram in chains and chains[bi_gram] != []:
+        if chains[bi_gram] != []:
+        #if bi_gram in chains and chains[bi_gram] != []:
             new_word = random.choice(chains[bi_gram])
             output_string += " " + new_word
             bi_gram = (bi_gram[1], new_word)
